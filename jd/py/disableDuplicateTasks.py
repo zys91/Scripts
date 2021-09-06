@@ -11,16 +11,59 @@ import time
 
 ip="localhost"
 
-def loadSend():
-    print("加载推送功能")
-    global send
-    cur_path = os.path.abspath(os.path.dirname(__file__))
-    sys.path.append(cur_path)
-    if os.path.exists(cur_path + "/sendNotify.py"):
+## 获取通知服务
+class msg(object):
+    def __init__(self, m=''):
+        self.str_msg = m
+        self.message()
+    def message(self):
+        global msg_info
+        print(self.str_msg)
         try:
-            from sendNotify import send
+            msg_info = "{}\n{}".format(msg_info, self.str_msg)
         except:
-            print("加载通知服务失败~")
+            msg_info = "{}".format(self.str_msg)
+        sys.stdout.flush()
+    def getsendNotify(self, a=0):
+        if a == 0:
+            a += 1
+        try:
+            url = 'https://gitee.com/curtinlv/Public/raw/master/sendNotify.py'
+            response = requests.get(url)
+            if 'curtinlv' in response.text:
+                with open('sendNotify.py', "w+", encoding="utf-8") as f:
+                    f.write(response.text)
+            else:
+                if a < 5:
+                    a += 1
+                    return self.getsendNotify(a)
+                else:
+                    pass
+        except:
+            if a < 5:
+                a += 1
+                return self.getsendNotify(a)
+            else:
+                pass
+    def main(self):
+        global send
+        cur_path = os.path.abspath(os.path.dirname(__file__))
+        sys.path.append(cur_path)
+        if os.path.exists(cur_path + "/sendNotify.py"):
+            try:
+                from sendNotify import send
+            except:
+                self.getsendNotify()
+                try:
+                    from sendNotify import send
+                except:
+                    print("加载通知服务失败~")
+        else:
+            self.getsendNotify()
+            try:
+                from sendNotify import send
+            except:
+                print("加载通知服务失败~")
 
 headers={
     "Accept":        "application/json",
@@ -91,7 +134,7 @@ def loadToken():
 
 if __name__ == '__main__':
     print("开始！")
-    loadSend()
+    msg().main()
     # 直接从 /ql/config/auth.json中读取当前token
     token=loadToken()
     # send("成功获取token!","")
@@ -110,4 +153,4 @@ if __name__ == '__main__':
     else:
         disableDuplicateTasks(duplicateID)
     send("禁用成功","\n%s\n%s"%(before,after))
-        # print("禁用结束！")
+    print("禁用结束！")
