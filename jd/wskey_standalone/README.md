@@ -1,6 +1,7 @@
 # WSKEY_STANDALONE
 
-##　使用须知：
+## 使用须知：
+
 - 基于 wskey 原作者 Zy143L [脚本](https://github.com/Zy143L/wskey)修改
 - 实现本地 Python 环境部署，无需青龙容器双开实现 CK 生成与分发，更加安全高效
 - 脚本不含任何加密或上传用户信息的内容，完全基于原版修改
