@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # _*_ coding:utf-8 _*_
 
-#Modify: zys91
+# Modify: zys91
 
 import sys
 import os
@@ -18,7 +18,7 @@ from urllib3.util import Retry
 
 # 通知服务
 BARK = ''                   # bark服务,自行搜索; secrets可填;
-BARK_PUSH=''                # bark自建服务器，要填完整链接，结尾的/不要
+BARK_PUSH = ''              # bark自建服务器，要填完整链接，结尾的/不要
 SCKEY = ''                  # Server酱的SCKEY; secrets可填
 TG_BOT_TOKEN = ''           # tg机器人的TG_BOT_TOKEN; secrets可填1407203283:AAG9rt-6RDaaX0HBLZQq0laNOh898iFYaRQ
 TG_USER_ID = ''             # tg机器人的TG_USER_ID; secrets可填 1434078534

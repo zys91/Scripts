@@ -1,27 +1,28 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*
 
-#Modify: zys91
+# Rights: Zy143L
+# Modify: zys91
 
-import socket  # 用于端口检测
-import base64  # 用于编解码
-import json  # 用于Json解析
-import os  # 用于导入系统变量
-import sys  # 实现 sys.exit
+import socket   # 用于端口检测
+import base64   # 用于编解码
+import json     # 用于Json解析
+import os       # 用于导入系统变量
+import sys      # 实现 sys.exit
 import logging  # 用于日志输出
-import time  # 时间
-import re  # 正则过率
+import time     # 时间
+import re       # 正则过率
 
 # 默认配置
-WSKEY_DEBUG = 0
-WSKEY_CHECK_METHOD = 1
-WSKEY_SLEEP = 10
-WSKEY_TRY_COUNT = 1
-wskey_list = []
-ql_new = 1
-cks_push_ql_client_id = ""
-cks_push_ql_client_secret = ""
-cks_push_ql_url = "http://localhost:5700/"
+WSKEY_DEBUG = 0                             # 程序调试日志输出开关：0-关 1-开
+WSKEY_CHECK_METHOD = 1                      # WSKEY有效期检查方式：0-不检查，强制更新 1-根据生成时间检查 2-JD接口查询有效性
+WSKEY_SLEEP = 10                            # 生成WSKEY中休眠时间，默认10s
+WSKEY_TRY_COUNT = 1                         # WSKEY生成失败最大尝试次数，默认1次
+wskey_list = []                             # WSKEY清单，填写抓到的WSKEY
+ql_new = 1                                  # QL版本指定：0-旧版本<2.11.0 1-新版本>2.11.0
+cks_push_ql_client_id = ""                  # 目标容器应用ID (目前只支持单容器，应用须有环境变量权限)
+cks_push_ql_client_secret = ""              # 目标容器应用Secret
+cks_push_ql_url = "http://localhost:5700/"  # 目标容器地址
 
 if os.path.exists('config.json'):
     with open(r"config.json") as json_file:
