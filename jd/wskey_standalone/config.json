@@ -1,5 +1,5 @@
 {
-    "WSKEY_DEBUG" : 1,
+    "WSKEY_DEBUG" : 0,
     "WSKEY_CHECK_METHOD" : 1,
     "WSKEY_SLEEP" : 10,
     "WSKEY_TRY_COUNT" : 1,

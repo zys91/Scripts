@@ -13,14 +13,28 @@
 # Linux环境 安装好 python3 pip3 cron git
 apt-get install python3 python3-pip cron git
 git clone https://github.com/zys91/Scripts.git
-cd Scripts/jd/wskey_standalone/
+cd Scripts/jd/wskey_standalone
 pip install -r ./requirements.txt
 # 单次执行看输出调试
 python3 ./wskey.py
 # 没问题后添加到 cron 定时执行
+# 首先创建shell文件，并赋予可执行权限
+vim wskey.sh
+# 填写内容如下(路径自己修改)
+#-------内容开始-------
+#！/usr/bin/bash
+cd /home/xxx/Scripts/jd/wskey_standalone
+python3 wskey.py &> log.txt
+#-------内容结束-------
+chmod +x ./wskey.sh
 crontab -e
-# 添加如下定时任务: (目录和定时自己修改)
-12 2,14 * * * python3 /home/xxx/Scripts/jd/wskey_standalone/wskey.py &> /home/xxx/Scripts/jd/wskey_standalone/log.txt
+# 添加定时任务如下: (路径和定时自己修改)
+#-------内容开始-------
+12 2,14 * * * /home/xxx/Scripts/jd/wskey_standalone/wskey.sh
+#-------内容结束-------
+# 启动并开机自启动服务
+systemctl enable cron
+systemctl start cron
 ```
 ## 配置说明：
 - 在 config.json 中配置参数，具体参数含义如下
