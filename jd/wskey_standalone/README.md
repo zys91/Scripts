@@ -24,13 +24,13 @@ vim wskey.sh
 #-------内容开始-------
 #！/usr/bin/bash
 cd /home/xxx/Scripts/jd/wskey_standalone
-python3 wskey.py &> log.txt
+python3 wskey.py
 #-------内容结束-------
 chmod +x ./wskey.sh
 crontab -e
 # 添加定时任务如下: (路径和定时自己修改)
 #-------内容开始-------
-12 2,14 * * * /home/xxx/Scripts/jd/wskey_standalone/wskey.sh
+12 2,14 * * * /home/xxx/Scripts/jd/wskey_standalone/wskey.sh &> /home/xxx/Scripts/jd/wskey_standalone/log.txt
 #-------内容结束-------
 # 启动并开机自启动服务
 systemctl enable cron
