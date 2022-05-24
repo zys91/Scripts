@@ -11,7 +11,7 @@ import os       # 用于导入系统变量
 import sys      # 实现 sys.exit
 import logging  # 用于日志输出
 import time     # 时间
-import re       # 正则过率
+import re       # 正则过滤
 
 # 默认配置
 WSKEY_DEBUG = 0                             # 程序调试日志输出开关：0-关 1-开
@@ -57,7 +57,7 @@ except Exception as err:  # 异常捕捉
     logger.debug(str(err))  # 调试日志输出
     logger.info("无推送文件")  # 标准日志输出
 
-ver = 20505  # 版本号
+ver = 20524  # 版本号
 
 
 def ql_send(text):
@@ -149,7 +149,7 @@ def check_ck(ck):  # 方法 检查 Cookie有效性 使用变量传递 单次调�
 # 返回值 bool jd_ck
 def getToken(wskey):  # 方法 获取 Wskey转换使用的 Token 由 JD_API 返回 这里传递 wskey
     try:  # 异常捕捉
-        url = str(base64.b64decode(url_t).decode()) + 'genToken'  # 设置云端服务器地址 路由为 genToken
+        url = str(base64.b64decode(url_t).decode()) + 'api/genToken'  # 设置云端服务器地址 路由为 genToken
         header = {"User-Agent": ua}  # 设置 HTTP头
         params = requests.get(url=url, headers=header, verify=False, timeout=20).json()  # 设置 HTTP请求参数 超时 20秒 Json解析
     except Exception as err:  # 异常捕捉
@@ -319,7 +319,7 @@ def ql_insert(i_ck):  # 方法 插入新变量
 
 
 def cloud_info():  # 方法 云端信息
-    url = str(base64.b64decode(url_t).decode()) + 'check_api'  # 设置 URL地址 路由 [check_api]
+    url = str(base64.b64decode(url_t).decode()) + 'api/check_api'  # 设置 URL地址 路由 [check_api]
     for i in range(3):  # For循环 3次
         try:  # 异常捕捉
             headers = {"authorization": "Bearer Shizuku"}  # 设置 HTTP头
@@ -348,8 +348,8 @@ def cloud_info():  # 方法 云端信息
 
 
 def check_cloud():  # 方法 云端地址检查
-    url_list = ['aHR0cDovLzQzLjEzNS45MC4yMy8=', 'aHR0cHM6Ly9zaGl6dWt1Lm1sLw==',
-                'aHR0cHM6Ly9jZi5zaGl6dWt1Lm1sLw==']  # URL list Encode
+    url_list = ['aHR0cDovL2FwaS5tb21vZS5tbC8=', 'aHR0cHM6Ly9hcGkubW9tb2UubWwv',
+                'aHR0cHM6Ly9hcGkuaWxpeWEuY2Yv']  # URL list Encode
     for i in url_list:  # for循环 url_list
         url = str(base64.b64decode(i).decode())  # 设置 url地址 [str]
         try:  # 异常捕捉
@@ -358,7 +358,7 @@ def check_cloud():  # 方法 云端地址检查
             logger.debug(str(err))  # 调试日志输出
             continue  # 循环继续
         else:  # 分支判断
-            info = ['Default', 'HTTPS', 'CloudFlare']  # 输出信息[List]
+            info = ['HTTP', 'HTTPS', 'CloudFlare']  # 输出信息[List]
             logger.info(str(info[url_list.index(i)]) + " Server Check OK\n--------------------\n")  # 标准日志输出
             return i  # 返回 ->i
     logger.info("\n云端地址全部失效, 请检查网络!")  # 标准日志输出
@@ -409,7 +409,7 @@ if __name__ == '__main__':  # Python主函数执行入口
                         ql_update(eid, nt_key)  # 函数 ql_update 参数 eid JD_COOKIE
                     else:  # 判断分支
                         logger.info(str(wspin) + "账号禁用")  # 标准日志输出
-                        text = "账号: {0} WsKey疑似失效, 已禁用Cookie".format(wspin)  # 设置推送内容
+                        text = "账号: {0} WsKey疑似失效, Cookie转换失败".format(wspin)  # 设置推送内容
                         ql_send(text)
                 else:  # 判断分支
                     logger.info(str(wspin) + "账号有效")  # 标准日志输出
