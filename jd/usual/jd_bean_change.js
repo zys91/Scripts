@@ -336,7 +336,7 @@ if(DisableIndex!=-1){
 			strGuoqi="";
 			
 			console.log(`******开始查询【京东账号${$.index}】${$.nickName || $.UserName}*********`);
-		    $.UA = require('./USER_AGENTS').UARAM();
+		    $.UA = require('./USER_AGENTS').USER_AGENT;
 			await TotalBean();			
 		    //await TotalBean2();
 			if ($.beanCount == 0) {
