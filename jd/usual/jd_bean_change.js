@@ -7,7 +7,7 @@ cron "28 8,21 * * *" jd_bean_change.js, tag:资产变化强化版by-ccwav
 const $ = new Env('京东资产统计');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
-const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
+const jdCookieNode = $.isNode() ? require('./function/jdCookie.js') : '';
 let NowHour = new Date().getHours();
 
 //默认开启缓存模式
@@ -336,7 +336,7 @@ if(DisableIndex!=-1){
 			strGuoqi="";
 			
 			console.log(`******开始查询【京东账号${$.index}】${$.nickName || $.UserName}*********`);
-		    $.UA = require('./USER_AGENTS').UARAM();
+		    $.UA = require('./function/USER_AGENTS').UARAM();
 			await TotalBean();			
 		    //await TotalBean2();
 			if ($.beanCount == 0) {
@@ -1414,7 +1414,7 @@ function redPacket() {
 				'Referer': 'https://h5.m.jd.com/',
 				'Accept-Encoding': 'gzip, deflate, br',
 				"Cookie": cookie,
-				'User-Agent': $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1")
+				'User-Agent': $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./function/USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1")
 			}
 		}
 		$.get(options, (err, resp, data) => {
@@ -1758,7 +1758,7 @@ async function getjdfruit() {
 				"sec-fetch-dest": "empty",
 				"sec-fetch-mode": "cors",
 				"sec-fetch-site": "same-site",
-				"User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
+				"User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./function/USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
 				"Content-Type": "application/x-www-form-urlencoded"
 			},
 			timeout: 10000
@@ -1807,7 +1807,7 @@ function taskfruitUrl(function_id, body = {}) {
       "Accept": "*/*",
       "Origin": "https://carry.m.jd.com",
       "Accept-Encoding": "gzip, deflate, br",
-      "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
+      "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./function/USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
       "Accept-Language": "zh-CN,zh-Hans;q=0.9",
       "Referer": "https://carry.m.jd.com/",
       "Cookie": cookie
